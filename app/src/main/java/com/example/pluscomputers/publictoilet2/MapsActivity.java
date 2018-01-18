@@ -1,27 +1,20 @@
 package com.example.pluscomputers.publictoilet2;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -29,12 +22,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -58,10 +47,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         listAdapter = new ListLocationAdapter(listLocations,this);
 
-        gpsImageView = (ImageView) findViewById(R.id.gpsImageView);
+        gpsImageView = findViewById(R.id.gpsImageView);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -122,12 +111,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
+        // Pika qe preket ne ekran dhe kthen koordinatat(latitude,longitude)
+        // Ide e mire mund te jete nese shfrytezuesi e prek Map-in dhe ajo bohet full screen ose match_parent
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Toast.makeText(getApplicationContext(), "Pika: " + latLng, Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        //GPS , merr koordinatat nga GPS dhe shfaq markerin dhe cameraposition ne lokacionin e marrur
         gpsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callGPS();
 
-                distancaPikave = distanca(listLocations.get(2).getmLatitude(),listLocations.get(2).getmLongitude());
+                distancaPikave = distanceBetweenPoints(listLocations.get(2).getmLatitude(), listLocations.get(2).getmLongitude());
 
                 Toast.makeText(getApplicationContext(),"Distanca pikave eshte: " + distancaPikave +"km", Toast.LENGTH_LONG).show();
 
@@ -143,12 +143,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //recyclerView.setLayoutManager(mLayoutManager);
                 //recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-
-
             }
         });
 
+
+    }
+
+    public String distanceBetweenPoints(double lat, double lng) {
+        float results[] = new float[10];
+        //for (int i=0; i<=listLocations.size(); i++){
+        Location.distanceBetween(latGPS, lonGPS,
+                lat, lng, results);
+        //}
+
+        //Toast.makeText(getApplicationContext(),"Distanca: " + results[0]/1000000 + " km" ,Toast.LENGTH_LONG).show();
+
+        String distanca = String.valueOf(results[0] / 1000000);
+
+        return distanca;
     }
 
     public void callGPS() {
@@ -187,18 +199,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .fillColor(Color.argb(64,0,255,0)));
     }
 
-    public String distanca(double lat,double lng){
-        float results[] = new float[10];
-        //for (int i=0; i<=listLocations.size(); i++){
-            Location.distanceBetween(latGPS, lonGPS,
-                    lat, lng, results);
-        //}
-
-        //Toast.makeText(getApplicationContext(),"Distanca: " + results[0]/1000000 + " km" ,Toast.LENGTH_LONG).show();
-
-        String distanca = String.valueOf(results[0]/1000000);
-
-        return distanca;
-    }
 
 }
