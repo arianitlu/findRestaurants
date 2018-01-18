@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Public Toilet 2</string>
+    <string name="title_activity_maps">Public Toilet 2</string>
+    <string name="name">Emri i biznesit</string>
+    <string name="type">Tipi i biznesit</string>
+    <string name="pershkrimi">Restaurant with Mediterranean, Italian, Asiatic and Traditional Healthy food. Nice Garden, Good Atmosphere and Perfect Service.</string>
+    <string name="distance">2000 km</string>
+
+</resources>
