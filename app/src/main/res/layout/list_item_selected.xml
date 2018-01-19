@@ -7,20 +7,20 @@
 
     <LinearLayout
         android:id="@+id/mapView"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="#616161"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-        <FrameLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="300dp">
-            <fragment
-                xmlns:android="http://schemas.android.com/apk/res/android"
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:map="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/map"
@@ -31,6 +31,7 @@
                 map:cameraTargetLng="21.158651"
                 map:cameraZoom="11"
                 tools:context="com.example.pluscomputers.googlemapexample.MapsActivity" />
+
         </FrameLayout>
     </LinearLayout>
 
@@ -186,33 +187,36 @@
         android:layout_marginEnd="100dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="24dp"
+        android:background="#757575"
+        android:src="@drawable/man"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/pershkrimi"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:layout_constraintTop_toBottomOf="@+id/pershkrimi" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/tip2"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="24dp"
+        android:background="#757575"
+        android:src="@drawable/girl"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintStart_toEndOf="@+id/tip1"
-        app:layout_constraintTop_toBottomOf="@+id/pershkrimi"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:layout_constraintTop_toBottomOf="@+id/pershkrimi" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/tip3"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="2dp"
+        android:layout_marginTop="24dp"
+        android:background="#757575"
+        android:src="@drawable/wheelchairaccess"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/pershkrimi"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:layout_constraintStart_toEndOf="@+id/tip2"
+        app:layout_constraintTop_toBottomOf="@+id/pershkrimi" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -222,13 +226,102 @@
         app:layout_constraintGuide_end="144dp" />
 
     <TextView
+        android:id="@+id/eKlikuara"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:id="@+id/eKlikuara"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapView" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Komoditeti"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Pajisje "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <RatingBar
+        android:id="@+id/ratingBar5"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:layout_marginTop="24dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="5"
+        android:stepSize="1.0"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar3"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RatingBar
+        android:id="@+id/ratingBar6"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:layout_marginTop="24dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="5"
+        android:stepSize="1.0"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar5"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RatingBar
+        android:id="@+id/ratingBar7"
+        android:layout_width="236dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="5"
+        android:stepSize="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.058" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="Vlerësimi përgjithshëm"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btnred"
+        android:text="Vlerëso"
+        app:layout_constraintBottom_toBottomOf="@+id/ratingBar7"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

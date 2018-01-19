@@ -30,9 +30,9 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
 
             itemView.setOnClickListener(this);
 
-            name = (TextView) itemView.findViewById(R.id.name);
-            type = (TextView) itemView.findViewById(R.id.type);
-            distance = (TextView) itemView.findViewById(R.id.distance);
+            name = itemView.findViewById(R.id.name);
+            type = itemView.findViewById(R.id.type);
+            distance = itemView.findViewById(R.id.distance);
         }
 
         @Override
@@ -40,7 +40,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
             int position = getAdapterPosition();
             ListLocation list = listLocations.get(position);
 
-            Intent intent = new Intent(ctx,ListLocationsDetails.class);
+            Intent intent = new Intent(ctx, ListLocationsDetailsActivity.class);
             intent.putExtra("name", list.getName());
             intent.putExtra("latitude",list.getmLatitude());
             intent.putExtra("longitude",list.getmLongitude());

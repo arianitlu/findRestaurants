@@ -65,6 +65,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ListLocation lista = new ListLocation("New Born", "Kafe", "2km",42.660965, 21.158258);
         listLocations.add(lista);
 
+        lista = new ListLocation("Ferizaj", "Kafe", "2.5km", 42.3703312, 21.1485373);
+        listLocations.add(lista);
+
         lista = new ListLocation("SunnyHill", "Restaurant", "2.5km",42.652385, 21.170248);
         listLocations.add(lista);
 
@@ -113,35 +116,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Pika qe preket ne ekran dhe kthen koordinatat(latitude,longitude)
         // Ide e mire mund te jete nese shfrytezuesi e prek Map-in dhe ajo bohet full screen ose match_parent
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Toast.makeText(getApplicationContext(), "Pika: " + latLng, Toast.LENGTH_LONG).show();
-
-            }
-        });
+//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                Toast.makeText(getApplicationContext(), "Pika: " + latLng, Toast.LENGTH_LONG).show();
+//
+//            }
+//        });
 
         //GPS , merr koordinatat nga GPS dhe shfaq markerin dhe cameraposition ne lokacionin e marrur
+        // llogarit distancen prej koordinatave te GPS deri te pika e caktuar
         gpsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callGPS();
 
-                distancaPikave = distanceBetweenPoints(listLocations.get(2).getmLatitude(), listLocations.get(2).getmLongitude());
+                distancaPikave = distanceBetweenPoints(listLocations.get(1).getmLatitude(), listLocations.get(1).getmLongitude());
 
-                Toast.makeText(getApplicationContext(),"Distanca pikave eshte: " + distancaPikave +"km", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),
+                        "\nDistanca nga lokacioni  "
+                                + "2 eshte :"
+                                + distancaPikave + " km",
 
-                //listAdapter.distancaRe(distancaPikave);
-                //listLocations.clear();
-                //listData2();
-
-                //listAdapter2 = new ListLocationAdapter(listLocations2,getApplicationContext());
-
-                //recyclerView.swapAdapter(listAdapter2, false);
-
-                //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                //recyclerView.setLayoutManager(mLayoutManager);
-                //recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        Toast.LENGTH_LONG).show();
 
             }
         });
@@ -158,7 +155,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Toast.makeText(getApplicationContext(),"Distanca: " + results[0]/1000000 + " km" ,Toast.LENGTH_LONG).show();
 
-        String distanca = String.valueOf(results[0] / 1000000);
+        String distanca = String.valueOf(results[0] / 1000);
 
         return distanca;
     }
@@ -171,8 +168,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location l = g.getLocation();
 
         if (l != null) {
-            double latGPS = l.getLatitude();
-            double lonGPS = l.getLongitude();
+            latGPS = l.getLatitude();
+            lonGPS = l.getLongitude();
 
             goToMapPoint(latGPS,lonGPS,"Your location");
         }
