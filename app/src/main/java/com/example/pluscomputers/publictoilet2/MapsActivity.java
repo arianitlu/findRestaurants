@@ -17,6 +17,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,6 +36,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //private ListLocationAdapter listAdapter2;
     private ImageView gpsImageView;
     private String distancaPikave;
+    float colorGPS = BitmapDescriptorFactory.HUE_BLUE;
+    float colorNormal = BitmapDescriptorFactory.HUE_RED;
 
     double latGPS;
     double lonGPS;
@@ -48,7 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         recyclerView = findViewById(R.id.recycler_view);
-        listAdapter = new ListLocationAdapter(listLocations,this);
+        listAdapter = new ListLocationAdapter(listLocations, this, this);
 
         gpsImageView = findViewById(R.id.gpsImageView);
 
@@ -110,7 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int i = 0 ; i < listLocations.size() ; i++){
 
-        goToMapPoint(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(),listLocations.get(i).getName());
+            goToMapPoint(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorNormal);
 
         }
 
@@ -133,12 +136,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 distancaPikave = distanceBetweenPoints(listLocations.get(1).getmLatitude(), listLocations.get(1).getmLongitude());
 
-                Toast.makeText(getApplicationContext(),
-                        "\nDistanca nga lokacioni  "
-                                + "2 eshte :"
-                                + distancaPikave + " km",
-
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(),
+//                        "\nDistanca nga lokacioni  "
+//                                + "2 eshte :"
+//                                + distancaPikave + " km",
+//
+//                        Toast.LENGTH_LONG).show();
 
             }
         });
@@ -171,12 +174,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             latGPS = l.getLatitude();
             lonGPS = l.getLongitude();
 
-            goToMapPoint(latGPS,lonGPS,"Your location");
+            goToMapPoint(latGPS, lonGPS, "Your location", colorGPS);
         }
 
     }
 
-    public void goToMapPoint(double latitude , double longitude , String title){
+    public void goToMapPoint(double latitude, double longitude, String title, float color) {
 
         LatLng location = new LatLng(latitude,longitude);
 
@@ -188,7 +191,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .newCameraPosition(position), 4000, null);
         mMap.addMarker(new MarkerOptions()
                 .position(location)
-                .title(title));
+                .title(title)
+                .icon(BitmapDescriptorFactory.defaultMarker(color)));
         mMap.addCircle(new CircleOptions()
                 .center(location)
                 .radius(100)
