@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +24,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -33,7 +35,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<ListLocation> listLocations2 = new ArrayList<>();
     private RecyclerView recyclerView;
     private ListLocationAdapter listAdapter;
-    //private ListLocationAdapter listAdapter2;
     private ImageView gpsImageView;
     private String distancaPikave;
     float colorGPS = BitmapDescriptorFactory.HUE_BLUE;
@@ -55,54 +56,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         gpsImageView = findViewById(R.id.gpsImageView);
 
+        callGPS();
+        listData();
+        sortData();
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(listAdapter);
 
-        listData();
-
     }
 
-    private void listData() {
-        ListLocation lista = new ListLocation("New Born", "Kafe", "2km",42.660965, 21.158258);
-        listLocations.add(lista);
 
-        lista = new ListLocation("Ferizaj", "Kafe", "2.5km", 42.3703312, 21.1485373);
-        listLocations.add(lista);
-
-        lista = new ListLocation("SunnyHill", "Restaurant", "2.5km",42.652385, 21.170248);
-        listLocations.add(lista);
-
-        lista = new ListLocation("Libraria Universitare", "Librari", "3.5km",42.656521, 21.162000);
-        listLocations.add(lista);
-
-        lista = new ListLocation("Universiteti per biznes dhe teknologji", "Universitet", "4.5km",42.558550, 21.134597);
-        listLocations.add(lista);
-
-        lista = new ListLocation("Qendra inovacionit te Kosoves", "Shkolle", "5km",42.656521, 21.162000);
-        listLocations.add(lista);
-
-        lista = new ListLocation("Katedralja", "Katedrale", "6.5km",42.656550, 21.159302);
-        listLocations.add(lista);
-
-        lista = new ListLocation("Telekomi i Kosoves", "Posta", "7.4km",42.651735, 21.157197);
-        listLocations.add(lista);
-
-        lista = new ListLocation("Dardha", "Qender Tregtare", "8.5km",42.648956, 21.151975);
-        listLocations.add(lista);
-    }
-
-    private void listData2() {
-        ListLocation lista = new ListLocation("New Born", "Kafe", distancaPikave,42.660965, 21.158258);
-        listLocations2.add(lista);
-
-        lista = new ListLocation("SunnyHill", "Restaurant", distancaPikave,42.652385, 21.170248);
-        listLocations2.add(lista);
-
-        lista = new ListLocation("Libraria Universitare", "Librari", distancaPikave,42.656521, 21.162000);
-        listLocations2.add(lista);
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -117,31 +82,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        // Pika qe preket ne ekran dhe kthen koordinatat(latitude,longitude)
-        // Ide e mire mund te jete nese shfrytezuesi e prek Map-in dhe ajo bohet full screen ose match_parent
-//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-//            @Override
-//            public void onMapClick(LatLng latLng) {
-//                Toast.makeText(getApplicationContext(), "Pika: " + latLng, Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
-
         //GPS , merr koordinatat nga GPS dhe shfaq markerin dhe cameraposition ne lokacionin e marrur
         // llogarit distancen prej koordinatave te GPS deri te pika e caktuar
         gpsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callGPS();
+                callGpsTouch();
 
-                distancaPikave = distanceBetweenPoints(listLocations.get(1).getmLatitude(), listLocations.get(1).getmLongitude());
-
-//                Toast.makeText(getApplicationContext(),
-//                        "\nDistanca nga lokacioni  "
-//                                + "2 eshte :"
-//                                + distancaPikave + " km",
-//
-//                        Toast.LENGTH_LONG).show();
+                //distancaPikave = distanceBetweenPoints(listLocations.get(1).getmLatitude(), listLocations.get(1).getmLongitude());
 
             }
         });
@@ -163,6 +111,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return distanca;
     }
 
+    private void listData() {
+        ListLocation lista = new ListLocation("New Born", "Kafe",
+                distanceBetweenPoints(42.660965, 21.158258), 42.660965, 21.158258);
+        listLocations.add(lista);
+
+        lista = new ListLocation("Ferizaj", "Kafe",
+                distanceBetweenPoints(42.3703312, 21.1485373), 42.3703312, 21.1485373);
+        listLocations.add(lista);
+
+        lista = new ListLocation("SunnyHill", "Restaurant",
+                distanceBetweenPoints(42.652385, 21.170248), 42.652385, 21.170248);
+        listLocations.add(lista);
+
+        lista = new ListLocation("Libraria Universitare", "Librari",
+                distanceBetweenPoints(42.656521, 21.162000), 42.656521, 21.162000);
+        listLocations.add(lista);
+
+        lista = new ListLocation("Universiteti per biznes dhe teknologji", "Universitet",
+                distanceBetweenPoints(42.558550, 21.134597), 42.558550, 21.134597);
+        listLocations.add(lista);
+
+        lista = new ListLocation("Qendra inovacionit te Kosoves", "Shkolle",
+                distanceBetweenPoints(42.656521, 21.162000), 42.656521, 21.162000);
+        listLocations.add(lista);
+
+        lista = new ListLocation("Katedralja", "Katedrale",
+                distanceBetweenPoints(42.656550, 21.159302), 42.656550, 21.159302);
+        listLocations.add(lista);
+    }
+
     public void callGPS() {
         ActivityCompat.requestPermissions(MapsActivity.this,new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION},123);
@@ -173,10 +151,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (l != null) {
             latGPS = l.getLatitude();
             lonGPS = l.getLongitude();
+        }
+
+    }
+
+    public void callGpsTouch() {
+
+        ActivityCompat.requestPermissions(MapsActivity.this, new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+
+        GPStracker g = new GPStracker(getApplication());
+        Location l = g.getLocation();
+
+        if (l != null) {
+            latGPS = l.getLatitude();
+            lonGPS = l.getLongitude();
 
             goToMapPoint(latGPS, lonGPS, "Your location", colorGPS);
         }
-
     }
 
     public void goToMapPoint(double latitude, double longitude, String title, float color) {
@@ -200,5 +192,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .fillColor(Color.argb(64,0,255,0)));
     }
 
+    public void sortData() {
+
+//        List<ListLocation> listPerSortim = new ArrayList<ListLocation>();
+//        listPerSortim.add( new ListLocation("New Born", "Kafe", "8km",42.660965, 21.158258));
+//        listPerSortim.add( new ListLocation("Ferizaj", "Kafe", "2.5km", 42.3703312, 21.1485373));
+//        listPerSortim.add( new ListLocation("SunnyHill", "Restaurant", "4km",42.652385, 21.170248));
+
+        Collections.sort(listLocations, new Comparator<ListLocation>() {
+            public int compare(ListLocation obj1, ListLocation obj2) {
+                // TODO Auto-generated method stub
+                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance());
+            }
+        });
+
+        Log.v("FUN", listLocations.get(0).getDistance().toString());
+        Log.v("\nFUN", listLocations.get(1).getDistance().toString());
+        Log.v("\nFUN", listLocations.get(2).getDistance().toString());
+    }
 
 }

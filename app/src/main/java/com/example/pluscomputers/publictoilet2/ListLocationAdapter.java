@@ -19,7 +19,6 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
     private List<ListLocation> listLocations;
     private Context ctx;
     private Activity act;
-    String distanca1;
     double latGPS;
     double lonGPS;
 
@@ -74,7 +73,6 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
         holder.name.setText(list.getName());
         holder.type.setText(list.getType());
         holder.distance.setText(distanceBetweenPoints(list.getmLatitude(), list.getmLongitude()) + " km");
-        //holder.distance.setText(distanca1);
 
         }
 
