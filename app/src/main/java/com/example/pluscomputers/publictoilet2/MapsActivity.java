@@ -35,10 +35,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<ListLocation> listLocations2 = new ArrayList<>();
     private RecyclerView recyclerView;
     private ListLocationAdapter listAdapter;
+
     private ImageView gpsImageView;
+    private boolean gpsCalled = false;
+
     private String distancaPikave;
-    float colorGPS = BitmapDescriptorFactory.HUE_BLUE;
-    float colorNormal = BitmapDescriptorFactory.HUE_RED;
+
+    float colorMarkerGPS = BitmapDescriptorFactory.HUE_BLUE;
+    float colorMarkerNormal = BitmapDescriptorFactory.HUE_RED;
 
     double latGPS;
     double lonGPS;
@@ -67,8 +71,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -78,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int i = 0 ; i < listLocations.size() ; i++){
 
-            goToMapPoint(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorNormal);
+            createAndGoToPoint(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorMarkerNormal);
 
         }
 
@@ -87,24 +89,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         gpsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callGpsTouch();
+                callGpsOnTouch();
 
                 //distancaPikave = distanceBetweenPoints(listLocations.get(1).getmLatitude(), listLocations.get(1).getmLongitude());
 
             }
         });
 
+        createAndGoToPoint(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(), listLocations.get(0).getName(), colorMarkerNormal);
+
 
     }
 
     public String distanceBetweenPoints(double lat, double lng) {
         float results[] = new float[10];
-        //for (int i=0; i<=listLocations.size(); i++){
+
         Location.distanceBetween(latGPS, lonGPS,
                 lat, lng, results);
-        //}
-
-        //Toast.makeText(getApplicationContext(),"Distanca: " + results[0]/1000000 + " km" ,Toast.LENGTH_LONG).show();
 
         String distanca = String.valueOf(results[0] / 1000);
 
@@ -155,23 +156,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void callGpsTouch() {
+    public void callGpsOnTouch() {
 
         ActivityCompat.requestPermissions(MapsActivity.this, new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION}, 123);
 
-        GPStracker g = new GPStracker(getApplication());
-        Location l = g.getLocation();
+        if (gpsCalled == false) {
 
-        if (l != null) {
-            latGPS = l.getLatitude();
-            lonGPS = l.getLongitude();
+            GPStracker g = new GPStracker(getApplication());
+            Location l = g.getLocation();
 
-            goToMapPoint(latGPS, lonGPS, "Your location", colorGPS);
+            if (l != null) {
+                latGPS = l.getLatitude();
+                lonGPS = l.getLongitude();
+
+                createAndGoToPoint(latGPS, lonGPS, "Your location", colorMarkerGPS);
+            }
         }
+
+        goToPoint(latGPS, lonGPS);
+
+        gpsCalled = true;
     }
 
-    public void goToMapPoint(double latitude, double longitude, String title, float color) {
+    public void createAndGoToPoint(double latitude, double longitude, String title, float color) {
 
         LatLng location = new LatLng(latitude,longitude);
 
@@ -190,6 +198,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .radius(100)
                 .strokeColor(Color.GREEN)
                 .fillColor(Color.argb(64,0,255,0)));
+    }
+
+    public void goToPoint(double latitude, double longitude) {
+
+        LatLng location = new LatLng(latitude, longitude);
+
+        CameraPosition position = new CameraPosition.Builder()
+                .target(new LatLng(latitude, longitude))
+                .zoom(14)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(position), 4000, null);
     }
 
     public void sortData() {

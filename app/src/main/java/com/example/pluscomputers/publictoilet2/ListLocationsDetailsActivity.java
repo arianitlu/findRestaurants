@@ -24,7 +24,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_item_selected);
+        setContentView(R.layout.list_item_selected1);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

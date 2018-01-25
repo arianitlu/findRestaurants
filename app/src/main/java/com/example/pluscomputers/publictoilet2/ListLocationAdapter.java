@@ -39,7 +39,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
 
             itemView.setOnClickListener(this);
 
-            name = itemView.findViewById(R.id.name);
+            name = itemView.findViewById(R.id.name1);
             type = itemView.findViewById(R.id.type);
             distance = itemView.findViewById(R.id.distance);
         }
@@ -74,7 +74,12 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
         holder.type.setText(list.getType());
         holder.distance.setText(distanceBetweenPoints(list.getmLatitude(), list.getmLongitude()) + " km");
 
-        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return listLocations.size();
+    }
 
     public String distanceBetweenPoints(double lat, double lng) {
         float results[] = new float[10];
@@ -101,10 +106,5 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
             lonGPS = l.getLongitude();
         }
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return listLocations.size();
     }
 }
