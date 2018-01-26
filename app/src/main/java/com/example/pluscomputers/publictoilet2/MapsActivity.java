@@ -113,8 +113,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void listData() {
-        ListLocation lista = new ListLocation("New Born", "Kafe",
-                distanceBetweenPoints(42.660965, 21.158258), 42.660965, 21.158258);
+        ListLocation lista = new ListLocation("Fakulteti Teknik", "Kafe",
+                distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
         listLocations.add(lista);
 
         lista = new ListLocation("Ferizaj", "Kafe",
@@ -126,7 +126,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         listLocations.add(lista);
 
         lista = new ListLocation("Libraria Universitare", "Librari",
-                distanceBetweenPoints(42.656521, 21.162000), 42.656521, 21.162000);
+                distanceBetweenPoints(42.6557309, 21.1598383), 42.6557309, 21.1598383);
         listLocations.add(lista);
 
         lista = new ListLocation("Universiteti per biznes dhe teknologji", "Universitet",
@@ -134,7 +134,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         listLocations.add(lista);
 
         lista = new ListLocation("Qendra inovacionit te Kosoves", "Shkolle",
-                distanceBetweenPoints(42.656521, 21.162000), 42.656521, 21.162000);
+                distanceBetweenPoints(42.6557098, 21.1597379), 42.6557098, 21.1597379);
         listLocations.add(lista);
 
         lista = new ListLocation("Katedralja", "Katedrale",
