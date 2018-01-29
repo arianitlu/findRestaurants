@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.media.Image;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView name,type,distance;
+        public ImageView imageView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -42,6 +45,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
             name = itemView.findViewById(R.id.name1);
             type = itemView.findViewById(R.id.type);
             distance = itemView.findViewById(R.id.distance);
+            imageView = itemView.findViewById(R.id.circleImageView);
         }
 
         @Override
@@ -73,6 +77,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
         holder.name.setText(list.getName());
         holder.type.setText(list.getType());
         holder.distance.setText(distanceBetweenPoints(list.getmLatitude(), list.getmLongitude()) + " km");
+        holder.imageView.setImageResource(list.getImg());
 
     }
 

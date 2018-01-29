@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
     android:orientation="vertical"
     android:paddingBottom="8dp"
     android:paddingTop="8dp"
@@ -29,7 +28,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:text="@string/type"
-        android:textColor="#757575"
+        android:textColor="#000000"
         android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
         app:layout_constraintTop_toBottomOf="@+id/name1" />
@@ -41,7 +40,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/distance"
-        android:textColor="#757575"
+        android:textColor="#000000"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +53,7 @@
         android:layout_height="25dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:background="#757575"
+        android:background="#2196F3"
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
         app:layout_constraintTop_toBottomOf="@+id/type"
         android:src="@drawable/man"/>
@@ -65,7 +64,7 @@
         android:layout_height="25dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:background="#757575"
+        android:background="#E91E63"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/type"
         android:src="@drawable/girl"/>
@@ -77,17 +76,15 @@
         android:layout_marginStart="4dp"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
-        android:background="#757575"
+        android:background="#009688"
         android:src="@drawable/wheelchairaccess"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/circleImageView"
         android:layout_width="69dp"
         android:layout_height="83dp"
         android:layout_marginTop="0dp"
-        android:background="#CFD8DC"
         android:src="@drawable/bitcoin"
-        app:border_color="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,7 +94,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="90dp"
-        android:background="#BDBDBD"
+        android:background="#E91E63"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

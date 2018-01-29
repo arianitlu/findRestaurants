@@ -3,6 +3,7 @@ package com.example.pluscomputers.publictoilet2;
 import android.Manifest;
 import android.graphics.Color;
 import android.location.Location;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<ListLocation> listLocations2 = new ArrayList<>();
     private RecyclerView recyclerView;
     private ListLocationAdapter listAdapter;
-
+    private Snackbar snackbar;
     private ImageView gpsImageView;
     private boolean gpsCalled = false;
 
@@ -67,7 +68,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setAdapter(listAdapter);
+
+        callSnackBar();
 
     }
 
@@ -80,12 +87,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int i = 0 ; i < listLocations.size() ; i++){
 
-            createAndGoToPoint(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorMarkerNormal);
+            createPointMap(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorMarkerNormal);
 
         }
 
         //GPS , merr koordinatat nga GPS dhe shfaq markerin dhe cameraposition ne lokacionin e marrur
-        // llogarit distancen prej koordinatave te GPS deri te pika e caktuar
+        // llogarit distancen prej oordinatave te GPS deri te pika e caktuar
         gpsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        createAndGoToPoint(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(), listLocations.get(0).getName(), colorMarkerNormal);
+        createPointMap(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(), listLocations.get(0).getName(), colorMarkerNormal);
 
 
     }
@@ -113,31 +120,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void listData() {
-        ListLocation lista = new ListLocation("Fakulteti Teknik", "Kafe",
+        ListLocation lista = new ListLocation(R.drawable.universitet, "Fakulteti Teknik", "Kafe",
                 distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
         listLocations.add(lista);
 
-        lista = new ListLocation("Ferizaj", "Kafe",
+        lista = new ListLocation(R.drawable.ferizaj, "Ferizaj", "Kafe",
                 distanceBetweenPoints(42.3703312, 21.1485373), 42.3703312, 21.1485373);
         listLocations.add(lista);
 
-        lista = new ListLocation("SunnyHill", "Restaurant",
+        lista = new ListLocation(R.drawable.sunnyhill, "SunnyHill", "Restaurant",
                 distanceBetweenPoints(42.652385, 21.170248), 42.652385, 21.170248);
         listLocations.add(lista);
 
-        lista = new ListLocation("Libraria Universitare", "Librari",
+        lista = new ListLocation(R.drawable.bibloteka, "Libraria Universitare", "Librari",
                 distanceBetweenPoints(42.6557309, 21.1598383), 42.6557309, 21.1598383);
         listLocations.add(lista);
 
-        lista = new ListLocation("Universiteti per biznes dhe teknologji", "Universitet",
+        lista = new ListLocation(R.drawable.ubt, "Universiteti per biznes dhe teknologji", "Universitet",
                 distanceBetweenPoints(42.558550, 21.134597), 42.558550, 21.134597);
         listLocations.add(lista);
 
-        lista = new ListLocation("Qendra inovacionit te Kosoves", "Shkolle",
+        lista = new ListLocation(R.drawable.inovacion, "Qendra inovacionit te Kosoves", "Shkolle",
                 distanceBetweenPoints(42.6557098, 21.1597379), 42.6557098, 21.1597379);
         listLocations.add(lista);
 
-        lista = new ListLocation("Katedralja", "Katedrale",
+        lista = new ListLocation(R.drawable.katedralja, "Katedralja", "Katedrale",
                 distanceBetweenPoints(42.656550, 21.159302), 42.656550, 21.159302);
         listLocations.add(lista);
     }
@@ -170,16 +177,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 latGPS = l.getLatitude();
                 lonGPS = l.getLongitude();
 
-                createAndGoToPoint(latGPS, lonGPS, "Your location", colorMarkerGPS);
+                createPointMap(latGPS, lonGPS, "Your location", colorMarkerGPS);
             }
         }
 
-        goToPoint(latGPS, lonGPS);
+        goToPointMap(latGPS, lonGPS);
 
         gpsCalled = true;
     }
 
-    public void createAndGoToPoint(double latitude, double longitude, String title, float color) {
+    public void createPointMap(double latitude, double longitude, String title, float color) {
 
         LatLng location = new LatLng(latitude,longitude);
 
@@ -200,7 +207,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .fillColor(Color.argb(64,0,255,0)));
     }
 
-    public void goToPoint(double latitude, double longitude) {
+    public void goToPointMap(double latitude, double longitude) {
 
         LatLng location = new LatLng(latitude, longitude);
 
@@ -229,6 +236,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.v("FUN", listLocations.get(0).getDistance().toString());
         Log.v("\nFUN", listLocations.get(1).getDistance().toString());
         Log.v("\nFUN", listLocations.get(2).getDistance().toString());
+    }
+
+    public void callSnackBar() {
+        View view = findViewById(R.id.activity_main);
+        String snackBarDistanca = distanceBetweenPoints(listLocations.get(0).getmLatitude(),
+                listLocations.get(0).getmLongitude());
+        String snackBarDistancaShkurtuar = snackBarDistanca.substring(0, 4);
+        snackbar = Snackbar.make(view, "Pika juaj më e afërt është: " + snackBarDistancaShkurtuar + " km",
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction("Hide", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.dismiss();
+                    }
+                });
+        snackbar.show();
+
+//        Snackbar.make(v, "Snackbar with Action", Snackbar.LENGTH_LONG)
+//                .setAction("UNDO", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Snackbar.make(view, "Action!", Snackbar.LENGTH_SHORT).show();
+//                    }
+//                }).setActionTextColor(Color.RED).show();
+//        View snackbarView = snackbar.getView();
+//        snackbarView.setBackgroundColor(Color.parseColor("#000000"));
+        snackbar.show();
     }
 
 }
