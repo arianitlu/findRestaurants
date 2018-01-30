@@ -5,6 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/activity_main">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/mCustomToolbar" />
+
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +24,7 @@
             tools:context="com.example.pluscomputers.publictoilet2.MapsActivity" />
 
         <ImageView
-            android:id="@+id/gpsImageView"
+            android:id="@+id/gpsLocation"
             android:scaleType="fitXY"
             android:layout_width="40dp"
             android:layout_height="40dp"

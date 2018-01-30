@@ -77,7 +77,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
         holder.name.setText(list.getName());
         holder.type.setText(list.getType());
         holder.distance.setText(distanceBetweenPoints(list.getmLatitude(), list.getmLongitude()) + " km");
-        holder.imageView.setImageResource(list.getImg());
+        //holder.imageView.setImageResource(list.getImg());
 
     }
 

@@ -6,4 +6,8 @@
     <string name="pershkrimi">Restaurant with Mediterranean, Italian, Asiatic and Traditional Healthy food. Nice Garden, Good Atmosphere and Perfect Service.</string>
     <string name="distance">2000 km</string>
 
+    <string name="title_activity_fullscreen_maps">FullscreenMapsActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

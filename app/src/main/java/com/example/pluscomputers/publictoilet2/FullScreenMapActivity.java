@@ -8,12 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,18 +29,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class FullScreenMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private List<ListLocation> listLocations = new ArrayList<>();
-    private List<ListLocation> listLocations2 = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private ListLocationAdapter listAdapter;
     private Snackbar snackbar;
-    private ImageView fullSizeMap;
-    private ImageView gpsLocation;
     private boolean gpsCalled = false;
-
+    private ImageView btnKthehu;
 
     private String distancaPikave;
 
@@ -58,52 +51,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         noStatusBar();
 
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_fullscreen_maps);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.fullMap);
         mapFragment.getMapAsync(this);
 
-        recyclerView = findViewById(R.id.recycler_view);
-        listAdapter = new ListLocationAdapter(listLocations, this, this);
-
-        fullSizeMap = findViewById(R.id.fullScreenView);
-        gpsLocation = findViewById(R.id.gpsLocation);
-
-        callGPS();
-        listData();
-        sortData();
-
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        recyclerView.setAdapter(listAdapter);
-
-        callSnackBar();
-
-        fullSizeMap.setOnClickListener(new View.OnClickListener() {
+        btnKthehu = findViewById(R.id.btnKthehu);
+        btnKthehu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //callGpsOnTouch();
-                Intent intent = new Intent(getApplicationContext(), FullScreenMapActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(intent);
             }
         });
 
-//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-//            @Override
-//            public void onMapClick(LatLng latLng) {
-//                Intent intent = new Intent(getApplicationContext(),FullScreenMapActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
-
-
+        callGPS();
+        listData();
+        sortData();
+        //callGpsOnTouch();
     }
 
     @Override
@@ -113,19 +79,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        for (int i = 0 ; i < listLocations.size() ; i++){
+        for (int i = 0; i < listLocations.size(); i++) {
 
             createPointMap(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorMarkerNormal);
 
         }
-
-
-        gpsLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callGpsOnTouch();
-            }
-        });
 
         createPointMap(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(), listLocations.get(0).getName(), colorMarkerNormal);
 
@@ -174,8 +132,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void callGPS() {
-        ActivityCompat.requestPermissions(MapsActivity.this,new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION},123);
+        ActivityCompat.requestPermissions(FullScreenMapActivity.this, new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION}, 123);
 
         GPStracker g = new GPStracker(getApplication());
         Location l = g.getLocation();
@@ -189,7 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void callGpsOnTouch() {
 
-        ActivityCompat.requestPermissions(MapsActivity.this, new String[]{
+        ActivityCompat.requestPermissions(FullScreenMapActivity.this, new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION}, 123);
 
         if (gpsCalled == false) {
@@ -212,14 +170,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void createPointMap(double latitude, double longitude, String title, float color) {
 
-        LatLng location = new LatLng(latitude,longitude);
+        LatLng location = new LatLng(latitude, longitude);
 
         CameraPosition position = new CameraPosition.Builder()
-                .target(new LatLng(latitude,longitude))
+                .target(new LatLng(latitude, longitude))
                 .zoom(14)
                 .build();
-        mMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(position), 4000, null);
+//        mMap.animateCamera(CameraUpdateFactory
+//                .newCameraPosition(position), 500, null);
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(position));
         mMap.addMarker(new MarkerOptions()
                 .position(location)
                 .title(title)
@@ -228,7 +187,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .center(location)
                 .radius(100)
                 .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(64,0,255,0)));
+                .fillColor(Color.argb(64, 0, 255, 0)));
     }
 
     public void goToPointMap(double latitude, double longitude) {
@@ -295,3 +254,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 }
+
