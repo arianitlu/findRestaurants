@@ -1,7 +1,6 @@
 package com.example.pluscomputers.publictoilet2;
 
 import android.Manifest;
-import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.support.design.widget.Snackbar;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +33,7 @@ public class FullScreenMapActivity extends FragmentActivity implements OnMapRead
     private List<ListLocation> listLocations = new ArrayList<>();
     private Snackbar snackbar;
     private boolean gpsCalled = false;
-    private ImageView btnKthehu;
+    private ImageView imgViewKthehu;
 
     private String distancaPikave;
 
@@ -57,12 +55,14 @@ public class FullScreenMapActivity extends FragmentActivity implements OnMapRead
                 .findFragmentById(R.id.fullMap);
         mapFragment.getMapAsync(this);
 
-        btnKthehu = findViewById(R.id.btnKthehu);
-        btnKthehu.setOnClickListener(new View.OnClickListener() {
+        imgViewKthehu = findViewById(R.id.imgViewKthehu);
+        imgViewKthehu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                //startActivity(intent);
+
+                FullScreenMapActivity.this.onBackPressed();
             }
         });
 
@@ -252,6 +252,7 @@ public class FullScreenMapActivity extends FragmentActivity implements OnMapRead
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
+
 
 }
 

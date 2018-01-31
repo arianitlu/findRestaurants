@@ -40,7 +40,7 @@
                 tools:context="com.example.pluscomputers.publictoilet2.MapsActivity" />
 
             <ImageView
-                android:id="@+id/btnKthehu"
+                android:id="@+id/imgViewKthehu"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="right"

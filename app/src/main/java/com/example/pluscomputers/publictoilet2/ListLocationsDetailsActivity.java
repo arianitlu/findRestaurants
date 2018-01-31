@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +26,8 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_item_selected1);
+
+        noStatusBar();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -89,5 +92,10 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 .radius(100)
                 .strokeColor(Color.GREEN)
                 .fillColor(Color.argb(64,0,255,0)));
+    }
+
+    public void noStatusBar() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }

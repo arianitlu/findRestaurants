@@ -1,7 +1,6 @@
 package com.example.pluscomputers.publictoilet2;
 
 import android.Manifest;
-import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.support.design.widget.Snackbar;
@@ -11,9 +10,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.ChangeBounds;
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +35,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -39,9 +45,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private RecyclerView recyclerView;
     private ListLocationAdapter listAdapter;
     private Snackbar snackbar;
-    private ImageView fullSizeMap;
+    private ImageView fullSizeMapIcon;
     private ImageView gpsLocation;
     private boolean gpsCalled = false;
+    private boolean fullScreen = false;
 
 
     private String distancaPikave;
@@ -51,6 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     double latGPS;
     double lonGPS;
+
+    private FrameLayout frameMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView = findViewById(R.id.recycler_view);
         listAdapter = new ListLocationAdapter(listLocations, this, this);
 
-        fullSizeMap = findViewById(R.id.fullScreenView);
+        fullSizeMapIcon = findViewById(R.id.fullScreenView);
         gpsLocation = findViewById(R.id.gpsLocation);
 
         callGPS();
@@ -85,24 +94,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         callSnackBar();
 
-        fullSizeMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //callGpsOnTouch();
-                Intent intent = new Intent(getApplicationContext(), FullScreenMapActivity.class);
-                startActivity(intent);
-            }
-        });
-
-//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//        fullSizeMapIcon.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onMapClick(LatLng latLng) {
-//                Intent intent = new Intent(getApplicationContext(),FullScreenMapActivity.class);
+//            public void onClick(View v) {
+//                //callGpsOnTouch();
+//                Intent intent = new Intent(getApplicationContext(), FullScreenMapActivity.class);
 //                startActivity(intent);
 //            }
 //        });
 
 
+        frameMap = findViewById(R.id.frameMap);
+
+        fullSizeMapIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean isFullScreen = false;
+
+//                Fade fade = new Fade();
+//                fade.setDuration(5000);
+
+                ChangeBounds changeBounds = new ChangeBounds();
+                changeBounds.setDuration(2000);
+
+                TransitionManager.beginDelayedTransition(frameMap);
+
+                if (fullScreen == false) {
+                    changeHeightFull(frameMap);
+                    isFullScreen = true;
+                } else {
+                    changeHeightNormal(frameMap);
+                    isFullScreen = false;
+                }
+
+                fullScreen = isFullScreen;
+            }
+
+
+        });
 
     }
 
@@ -292,6 +322,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void noStatusBar() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public void changeHeightFull(View... views) {
+        for (View current : views) {
+            ViewGroup.LayoutParams params = current.getLayoutParams();
+            params.height = MATCH_PARENT;
+            params.width = MATCH_PARENT;
+            current.setLayoutParams(params);
+        }
+    }
+
+    public void changeHeightNormal(View... views) {
+        for (View current : views) {
+            ViewGroup.LayoutParams params = current.getLayoutParams();
+            params.height = 1000;
+            params.width = MATCH_PARENT;
+            current.setLayoutParams(params);
+        }
     }
 
 }
