@@ -30,7 +30,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
         noStatusBar();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
     }

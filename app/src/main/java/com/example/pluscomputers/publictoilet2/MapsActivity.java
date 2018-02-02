@@ -3,6 +3,7 @@ package com.example.pluscomputers.publictoilet2;
 import android.Manifest;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -17,8 +18,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,7 +49,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private RecyclerView recyclerView;
     private ListLocationAdapter listAdapter;
     private Snackbar snackbar;
-    private ImageView fullSizeMapIcon;
     private ImageView gpsLocation;
     private boolean gpsCalled = false;
     private boolean fullScreen = false;
@@ -70,14 +73,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
         recyclerView = findViewById(R.id.recycler_view);
         listAdapter = new ListLocationAdapter(listLocations, this, this);
 
-        fullSizeMapIcon = findViewById(R.id.fullScreenView);
         gpsLocation = findViewById(R.id.gpsLocation);
+
+        frameMap = findViewById(R.id.frameMap);
 
         callGPS();
         listData();
@@ -93,47 +97,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView.setAdapter(listAdapter);
 
         callSnackBar();
-
-//        fullSizeMapIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //callGpsOnTouch();
-//                Intent intent = new Intent(getApplicationContext(), FullScreenMapActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
-
-        frameMap = findViewById(R.id.frameMap);
-
-        fullSizeMapIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                boolean isFullScreen = false;
-
-//                Fade fade = new Fade();
-//                fade.setDuration(5000);
-
-                ChangeBounds changeBounds = new ChangeBounds();
-                changeBounds.setDuration(2000);
-
-                TransitionManager.beginDelayedTransition(frameMap);
-
-                if (fullScreen == false) {
-                    changeHeightFull(frameMap);
-                    isFullScreen = true;
-                } else {
-                    changeHeightNormal(frameMap);
-                    isFullScreen = false;
-                }
-
-                fullScreen = isFullScreen;
-            }
-
-
-        });
-
     }
 
     @Override
@@ -143,11 +106,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        for (int i = 0 ; i < listLocations.size() ; i++){
+        for (int i = 0; i < listLocations.size(); i++) {
 
             createPointMap(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorMarkerNormal);
 
         }
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng clickCoords) {
+
+                boolean isFullScreen = false;
+
+                ChangeBounds changeBounds = new ChangeBounds();
+                changeBounds.setDuration(2000);
+
+                if (fullScreen == false) {
+
+                    isFullScreen = true;
+
+                    Animation bottomDown = AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.bottom_down);
+
+                    recyclerView.startAnimation(bottomDown);
+                    recyclerView.setVisibility(View.INVISIBLE);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChangeBounds changeBounds = new ChangeBounds();
+                            changeBounds.setDuration(2500);
+                            TransitionManager.beginDelayedTransition(frameMap, changeBounds);
+                            changeHeightFull(frameMap);
+                        }
+                    }, 2000);
+                } else {
+                    changeHeightNormal(frameMap);
+                    isFullScreen = false;
+                    TransitionManager.beginDelayedTransition(frameMap, changeBounds);
+                    Animation bottomUp = AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.bottom_up);
+
+                    recyclerView.startAnimation(bottomUp);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+                fullScreen = isFullScreen;
+            }
+        });
 
 
         gpsLocation.setOnClickListener(new View.OnClickListener() {
