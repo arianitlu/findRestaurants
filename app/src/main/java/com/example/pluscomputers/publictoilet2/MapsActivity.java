@@ -1,6 +1,7 @@
 package com.example.pluscomputers.publictoilet2;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +22,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,14 +53,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private RecyclerView recyclerView;
     private ListLocationAdapter listAdapter;
     private Snackbar snackbar;
-    private ImageView gpsLocation;
+    //private ImageView gpsLocation;
     private boolean gpsCalled = false;
     private boolean fullScreen = false;
+    private Button myLocation;
+
+    View mapview2;
 
 
     private String distancaPikave;
 
-    float colorMarkerGPS = BitmapDescriptorFactory.HUE_BLUE;
+    float colorMarkerGPS = BitmapDescriptorFactory.HUE_AZURE;
     float colorMarkerNormal = BitmapDescriptorFactory.HUE_RED;
 
     double latGPS;
@@ -79,7 +86,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView = findViewById(R.id.recycler_view);
         listAdapter = new ListLocationAdapter(listLocations, this, this);
 
-        gpsLocation = findViewById(R.id.gpsLocation);
+        //gpsLocation = findViewById(R.id.gpsLocation);
+
+        myLocation = findViewById(R.id.myLocation);
 
         frameMap = findViewById(R.id.frameMap);
 
@@ -104,7 +113,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap = googleMap;
 
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED){
+//            mMap.setMyLocationEnabled(true);
+//
+//        }
+
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
 
         for (int i = 0; i < listLocations.size(); i++) {
 
@@ -143,8 +159,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }, 2000);
                 } else {
                     changeHeightNormal(frameMap);
+
                     isFullScreen = false;
+
                     TransitionManager.beginDelayedTransition(frameMap, changeBounds);
+
                     Animation bottomUp = AnimationUtils.loadAnimation(getApplicationContext(),
                             R.anim.bottom_up);
 
@@ -155,15 +174,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-        gpsLocation.setOnClickListener(new View.OnClickListener() {
+        myLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callGpsOnTouch();
             }
         });
 
-        createPointMap(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(), listLocations.get(0).getName(), colorMarkerNormal);
+        createPointMap(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(),
+                listLocations.get(0).getName(), colorMarkerNormal);
 
 
     }

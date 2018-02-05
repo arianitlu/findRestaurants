@@ -33,9 +33,39 @@
 
     </FrameLayout>
 
-    <ScrollView
+    <TextView
+        android:id="@+id/name1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/name"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/describtion1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pershkrimi"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/avgRatings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:background="@drawable/btnred"
+        android:layout_gravity="center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.985"
@@ -51,29 +81,8 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingRight="30dp"
             android:scrollbars="vertical">
-
-            <TextView
-                android:id="@+id/name1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="28dp"
-                android:text="@string/name"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/describtion1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pershkrimi"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/name1"
-                app:layout_constraintTop_toBottomOf="@+id/name1" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -84,24 +93,22 @@
                 android:text="Pastertia"
                 android:textColor="#000000"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/describtion1" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <RatingBar
-                android:id="@+id/ratingBar"
+                android:id="@+id/ratingBar1"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="4"
+                android:rating="0"
                 android:stepSize="1.0"
                 app:layout_constraintBottom_toBottomOf="@+id/textView3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -120,22 +127,22 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="4"
+                android:rating="0"
                 android:stepSize="1.0"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar1"
                 app:layout_constraintVertical_bias="1.0" />
 
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="23dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="Madhesia"
@@ -149,15 +156,16 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="4"
+                android:rating="0"
                 android:stepSize="1.0"
                 app:layout_constraintBottom_toBottomOf="@+id/textView12"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar2" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar2"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -176,15 +184,16 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="4"
+                android:rating="0"
                 android:stepSize="1.0"
                 app:layout_constraintBottom_toBottomOf="@+id/textView13"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar3" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar3"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -203,16 +212,15 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="36dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="5"
+                android:rating="0"
                 android:stepSize="1.0"
                 app:layout_constraintBottom_toBottomOf="@+id/textView14"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar4"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar4" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -229,13 +237,13 @@
             <RatingBar
                 android:id="@+id/ratingBar6"
                 style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="32dp"
+                android:layout_width="79dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="36dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="1"
+                android:rating="0"
                 android:stepSize="1.0"
                 app:layout_constraintBottom_toBottomOf="@+id/textView15"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -258,15 +266,13 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="3"
+                android:rating="0"
                 android:stepSize="1.0"
                 app:layout_constraintBottom_toBottomOf="@+id/textView16"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar6" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

@@ -26,18 +26,18 @@
             android:layout_height="match_parent"
             tools:context="com.example.pluscomputers.publictoilet2.MapsActivity" />
 
-        <ImageView
-            android:id="@+id/gpsLocation"
-            android:scaleType="fitXY"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:cropToPadding="false"
-            android:layout_margin="10dp"
-            android:src="@drawable/gpsfixedindicator"
-            android:layout_gravity="right|bottom"
-            android:background="@android:color/transparent">
-        </ImageView>
+        <!--<ImageView-->
+        <!--android:id="@+id/gpsLocation"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:cropToPadding="false"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:src="@drawable/gpsfixedindicator"-->
+        <!--android:layout_gravity="right|bottom"-->
+        <!--android:background="@android:color/transparent">-->
+        <!--</ImageView>-->
 
 
     </FrameLayout>
