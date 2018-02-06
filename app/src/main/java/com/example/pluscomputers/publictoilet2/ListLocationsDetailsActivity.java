@@ -38,9 +38,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
     boolean iscalledListener6 = false;
     boolean iscalledListener7 = false;
 
-
     float vleraMesatare = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,15 +181,15 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
             lat = extras.getDouble("latitude");
             lng = extras.getDouble("longitude");
 
-            Toast.makeText(getApplicationContext(),lat + " ," + lng,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), lat + " ," + lng, Toast.LENGTH_LONG).show();
 
-            goToMapPoint(lat,lng,userName);
+            goToMapPoint(lat, lng, userName);
         }
     }
 
     public void callGPS() {
         ActivityCompat.requestPermissions(ListLocationsDetailsActivity.this, new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION},123);
+                Manifest.permission.ACCESS_FINE_LOCATION}, 123);
 
         GPStracker g = new GPStracker(getApplication());
         Location l = g.getLocation();
@@ -200,17 +198,17 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
             double latGPS = l.getLatitude();
             double lonGPS = l.getLongitude();
 
-            goToMapPoint(latGPS,lonGPS,"Your location");
+            goToMapPoint(latGPS, lonGPS, "Your location");
         }
 
     }
 
-    public void goToMapPoint(double latitude , double longitude , String title){
+    public void goToMapPoint(double latitude, double longitude, String title) {
 
-        LatLng location = new LatLng(latitude,longitude);
+        LatLng location = new LatLng(latitude, longitude);
 
         CameraPosition position = new CameraPosition.Builder()
-                .target(new LatLng(latitude,longitude))
+                .target(new LatLng(latitude, longitude))
                 .zoom(14)
                 .build();
         mMap.animateCamera(CameraUpdateFactory
@@ -222,7 +220,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 .center(location)
                 .radius(100)
                 .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(64,0,255,0)));
+                .fillColor(Color.argb(64, 0, 255, 0)));
     }
 
     public void noStatusBar() {
