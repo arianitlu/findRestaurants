@@ -26,8 +26,11 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
 
     GoogleMap mMap;
 
+    TextView txtName1, txtType1;
+
     RatingBar ratingBar1, ratingBar2, ratingBar3, ratingBar4, ratingBar5, ratingBar6, ratingBar7;
-    TextView avgRatings;
+    TextView avgRatings, txtRatPastertia, txtRatNdricimi, txtRatMadhesia, txtRatVentilimi, txtRatKomoditeti,
+            txtRatTextView1, txtRatTextView2;
     float numRating1, numRating2, numRating3, numRating4, numRating5, numRating6, numRating7;
     int numriPjestues = 0;
     boolean iscalledListener1 = false;
@@ -51,6 +54,9 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
+        txtName1 = findViewById(R.id.name1);
+        txtType1 = findViewById(R.id.type1);
+
         ratingBar1 = findViewById(R.id.ratingBar1);
         ratingBar2 = findViewById(R.id.ratingBar2);
         ratingBar3 = findViewById(R.id.ratingBar3);
@@ -60,6 +66,14 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
         ratingBar7 = findViewById(R.id.ratingBar7);
 
         avgRatings = findViewById(R.id.avgRatings);
+
+        txtRatKomoditeti = findViewById(R.id.txtRatKomoditeti);
+        txtRatMadhesia = findViewById(R.id.txtRatMadhesia);
+        txtRatNdricimi = findViewById(R.id.txtRatNdricimi);
+        txtRatPastertia = findViewById(R.id.txtRatPastertia);
+        txtRatVentilimi = findViewById(R.id.txtRatVentilimi);
+        txtRatTextView1 = findViewById(R.id.txtRatTextView1);
+        txtRatTextView2 = findViewById(R.id.txtRatTextView2);
 
         numRating1 = ratingBar1.getRating();
         numRating2 = ratingBar2.getRating();
@@ -86,6 +100,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 iscalledListener1 = true;
 
                 avgRatings.setText(String.valueOf(mesatarjaRatings(numriPjestues)));
+                txtRatPastertia.setText(String.valueOf(numRating1));
             }
         });
         ratingBar2.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -97,6 +112,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 }
                 iscalledListener2 = true;
                 avgRatings.setText(String.valueOf(mesatarjaRatings(numriPjestues)));
+                txtRatNdricimi.setText(String.valueOf(numRating2));
             }
         });
         ratingBar3.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -108,6 +124,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 }
                 iscalledListener3 = true;
                 avgRatings.setText(String.valueOf(mesatarjaRatings(numriPjestues)));
+                txtRatMadhesia.setText(String.valueOf(numRating3));
             }
         });
         ratingBar4.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -119,6 +136,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 }
                 iscalledListener4 = true;
                 avgRatings.setText(String.valueOf(mesatarjaRatings(numriPjestues)));
+                txtRatVentilimi.setText(String.valueOf(numRating4));
             }
         });
         ratingBar5.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -130,6 +148,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 }
                 iscalledListener5 = true;
                 avgRatings.setText(String.valueOf(mesatarjaRatings(numriPjestues)));
+                txtRatKomoditeti.setText(String.valueOf(numRating5));
             }
         });
         ratingBar6.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -141,6 +160,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 }
                 iscalledListener6 = true;
                 avgRatings.setText(String.valueOf(mesatarjaRatings(numriPjestues)));
+                txtRatTextView1.setText(String.valueOf(numRating6));
             }
         });
         ratingBar7.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -152,6 +172,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
                 }
                 iscalledListener7 = true;
                 avgRatings.setText(String.valueOf(mesatarjaRatings(numriPjestues)));
+                txtRatTextView2.setText(String.valueOf(numRating7));
             }
         });
 
@@ -172,18 +193,22 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        String userName;
+        String name;
         double lat;
         double lng;
+        String type;
 
         if (extras != null) {
-            userName = extras.getString("name");
+            name = extras.getString("name");
             lat = extras.getDouble("latitude");
             lng = extras.getDouble("longitude");
+            type = extras.getString("type");
 
-            Toast.makeText(getApplicationContext(), lat + " ," + lng, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), lat + " ," + lng, Toast.LENGTH_LONG).show();
+            txtName1.setText(name);
+            txtType1.setText(type);
 
-            goToMapPoint(lat, lng, userName);
+            goToMapPoint(lat, lng, name);
         }
     }
 

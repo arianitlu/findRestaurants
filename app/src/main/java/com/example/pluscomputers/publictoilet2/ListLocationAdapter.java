@@ -57,6 +57,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
             intent.putExtra("name", list.getName());
             intent.putExtra("latitude",list.getmLatitude());
             intent.putExtra("longitude",list.getmLongitude());
+            intent.putExtra("type", list.getType());
             ctx.startActivity(intent);
         }
     }

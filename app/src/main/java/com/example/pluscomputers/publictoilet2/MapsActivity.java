@@ -300,21 +300,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void sortData() {
 
-//        List<ListLocation> listPerSortim = new ArrayList<ListLocation>();
-//        listPerSortim.add( new ListLocation("New Born", "Kafe", "8km",42.660965, 21.158258));
-//        listPerSortim.add( new ListLocation("Ferizaj", "Kafe", "2.5km", 42.3703312, 21.1485373));
-//        listPerSortim.add( new ListLocation("SunnyHill", "Restaurant", "4km",42.652385, 21.170248));
-
         Collections.sort(listLocations, new Comparator<ListLocation>() {
             public int compare(ListLocation obj1, ListLocation obj2) {
                 // TODO Auto-generated method stub
                 return obj1.getDistance().compareToIgnoreCase(obj2.getDistance());
             }
         });
-
-        Log.v("FUN", listLocations.get(0).getDistance().toString());
-        Log.v("\nFUN", listLocations.get(1).getDistance().toString());
-        Log.v("\nFUN", listLocations.get(2).getDistance().toString());
     }
 
     public void callSnackBar() {
