@@ -102,31 +102,31 @@ public class FullScreenMapActivity extends FragmentActivity implements OnMapRead
     }
 
     private void listData() {
-        ListLocation lista = new ListLocation(R.drawable.universitet, "Fakulteti Teknik", "Kafe",
+        ListLocation lista = new ListLocation(R.drawable.universitet, "Fakulteti Teknik", "Kafe", "",
                 distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ferizaj, "Ferizaj", "Kafe",
+        lista = new ListLocation(R.drawable.ferizaj, "Ferizaj", "Kafe", "",
                 distanceBetweenPoints(42.3703312, 21.1485373), 42.3703312, 21.1485373);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.sunnyhill, "SunnyHill", "Restaurant",
+        lista = new ListLocation(R.drawable.sunnyhill, "SunnyHill", "Restaurant", "",
                 distanceBetweenPoints(42.652385, 21.170248), 42.652385, 21.170248);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.bibloteka, "Libraria Universitare", "Librari",
+        lista = new ListLocation(R.drawable.bibloteka, "Libraria Universitare", "Librari", "",
                 distanceBetweenPoints(42.6557309, 21.1598383), 42.6557309, 21.1598383);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ubt, "Universiteti per biznes dhe teknologji", "Universitet",
+        lista = new ListLocation(R.drawable.ubt, "Universiteti per biznes dhe teknologji", "Universitet", "",
                 distanceBetweenPoints(42.558550, 21.134597), 42.558550, 21.134597);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.inovacion, "Qendra inovacionit te Kosoves", "Shkolle",
+        lista = new ListLocation(R.drawable.inovacion, "Qendra inovacionit te Kosoves", "Shkolle", "",
                 distanceBetweenPoints(42.6557098, 21.1597379), 42.6557098, 21.1597379);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.katedralja, "Katedralja", "Katedrale",
+        lista = new ListLocation(R.drawable.katedralja, "Katedralja", "Katedrale", "",
                 distanceBetweenPoints(42.656550, 21.159302), 42.656550, 21.159302);
         listLocations.add(lista);
     }

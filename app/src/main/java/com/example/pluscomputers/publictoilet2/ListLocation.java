@@ -5,17 +5,28 @@ public class ListLocation {
     private int img;
     private String name;
     private String type;
+    private String describtion;
     private String distance;
     private double mLatitude;
     private double mLongitude;
 
-    public ListLocation(int img, String name, String tipi, String distanca, double latitude, double longitude) {
+    public ListLocation(int img, String name, String tipi, String describtion, String distanca, double latitude, double longitude) {
         this.img = img;
         this.name = name;
         this.type = tipi;
+        this.describtion = describtion;
         this.distance = distanca;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
+    }
+
+
+    public void setDescribtion(String describtion) {
+        this.describtion = describtion;
+    }
+
+    public String getDescribtion() {
+        return describtion;
     }
 
     public int getImg() {

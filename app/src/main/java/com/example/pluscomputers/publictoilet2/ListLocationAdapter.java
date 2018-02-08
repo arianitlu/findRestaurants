@@ -44,6 +44,7 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
 
             name = itemView.findViewById(R.id.name1);
             type = itemView.findViewById(R.id.type);
+
             distance = itemView.findViewById(R.id.distance);
             imageView = itemView.findViewById(R.id.circleImageView);
         }
@@ -55,9 +56,10 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
 
             Intent intent = new Intent(ctx, ListLocationsDetailsActivity.class);
             intent.putExtra("name", list.getName());
+            intent.putExtra("type", list.getType());
+            intent.putExtra("describtion", list.getDescribtion());
             intent.putExtra("latitude",list.getmLatitude());
             intent.putExtra("longitude",list.getmLongitude());
-            intent.putExtra("type", list.getType());
             ctx.startActivity(intent);
         }
     }

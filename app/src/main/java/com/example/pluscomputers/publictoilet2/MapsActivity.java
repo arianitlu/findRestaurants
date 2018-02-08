@@ -1,9 +1,11 @@
 package com.example.pluscomputers.publictoilet2;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +19,9 @@ import android.transition.ChangeBounds;
 import android.transition.Fade;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -27,6 +32,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -56,10 +62,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //private ImageView gpsLocation;
     private boolean gpsCalled = false;
     private boolean fullScreen = false;
-    private Button myLocation;
-
-    View mapview2;
-
+    //private Button myLocation;
+    private Toolbar toolbar;
 
     private String distancaPikave;
 
@@ -88,9 +92,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //gpsLocation = findViewById(R.id.gpsLocation);
 
-        myLocation = findViewById(R.id.myLocation);
+        //myLocation = findViewById(R.id.myLocation);
+
+        //toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
+        //setActionBar(toolbar);
 
         frameMap = findViewById(R.id.frameMap);
+
 
         callGPS();
         listData();
@@ -118,6 +126,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            mMap.setMyLocationEnabled(true);
 //
 //        }
+//        String uri = "http://maps.google.com/maps?saddr=" + 42.648533+","+21.167011+
+//                "&daddr="+42.652385+","+21.170248;
+//        Intent intent = new Intent(String.valueOf(mMap), Uri.parse(uri));
+//        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+//        startActivity(intent);
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
@@ -174,15 +187,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        myLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callGpsOnTouch();
-            }
-        });
+//        myLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                callGpsOnTouch();
+//            }
+//        });
 
         createPointMap(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(),
                 listLocations.get(0).getName(), colorMarkerNormal);
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int resId = item.getItemId();
+
+        if (resId == R.id.action_language) {
+            Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
+        }
+
+        return super.onOptionsItemSelected(item);
 
 
     }
@@ -200,30 +237,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void listData() {
         ListLocation lista = new ListLocation(R.drawable.universitet, "Fakulteti Teknik", "Kafe",
-                distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
+                "", distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ferizaj, "Ferizaj", "Kafe",
+        lista = new ListLocation(R.drawable.ferizaj, "Ferizaj", "Kafe", "",
                 distanceBetweenPoints(42.3703312, 21.1485373), 42.3703312, 21.1485373);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.sunnyhill, "SunnyHill", "Restaurant",
+        lista = new ListLocation(R.drawable.sunnyhill, "SunnyHill", "Restaurant", "",
                 distanceBetweenPoints(42.652385, 21.170248), 42.652385, 21.170248);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.bibloteka, "Libraria Universitare", "Librari",
+        lista = new ListLocation(R.drawable.bibloteka, "Libraria Universitare", "Librari", "",
                 distanceBetweenPoints(42.6557309, 21.1598383), 42.6557309, 21.1598383);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ubt, "Universiteti per biznes dhe teknologji", "Universitet",
+        lista = new ListLocation(R.drawable.ubt, "Universiteti per Biznes dhe Teknologji", "Universitet", "",
                 distanceBetweenPoints(42.558550, 21.134597), 42.558550, 21.134597);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.inovacion, "Qendra inovacionit te Kosoves", "Shkolle",
+        lista = new ListLocation(R.drawable.inovacion, "Qendra Inovacionit te Kosoves", "Shkolle", "",
                 distanceBetweenPoints(42.6557098, 21.1597379), 42.6557098, 21.1597379);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.katedralja, "Katedralja", "Katedrale",
+        lista = new ListLocation(R.drawable.katedralja, "Katedralja", "Katedrale", "",
                 distanceBetweenPoints(42.656550, 21.159302), 42.656550, 21.159302);
         listLocations.add(lista);
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.Toolbar android:id="@+id/custom_toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#263238">
@@ -20,15 +21,15 @@
     <!--android:layout_gravity="right"-->
     <!--android:layout_marginEnd="18dp" />-->
 
-    <Button
-        android:id="@+id/myLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:text="My Location"
-        android:textSize="9sp"
-        android:gravity="center"
-        android:layout_gravity="right"
-        android:layout_marginEnd="20dp"
-        android:textAllCaps="false"
-        android:background="@drawable/btnred" />
+    <!--<Button-->
+    <!--android:id="@+id/myLocation"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="35dp"-->
+    <!--android:text="My Location"-->
+    <!--android:textSize="9sp"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:layout_marginEnd="20dp"-->
+    <!--android:textAllCaps="false"-->
+    <!--android:background="@drawable/btnred" />-->
 </android.support.v7.widget.Toolbar>

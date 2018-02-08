@@ -33,35 +33,48 @@
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/name1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/name"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="16dp">
+
+        <TextView
+            android:id="@+id/name1"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/avgRatings"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnred"
+            android:text="0.0" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/type1"
+        android:id="@+id/describtion"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pershkrimi"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/avgRatings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:background="@drawable/btnred"
-        android:layout_gravity="center" />
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/btnred1"
+        android:layout_marginBottom="10dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -89,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="24dp"
                 android:text="Pastertia"
                 android:textColor="#000000"
                 android:textSize="20sp"

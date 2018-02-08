@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.WindowManager;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,7 +25,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
 
     GoogleMap mMap;
 
-    TextView txtName1, txtType1;
+    TextView txtName1, txtDescribtion;
 
     RatingBar ratingBar1, ratingBar2, ratingBar3, ratingBar4, ratingBar5, ratingBar6, ratingBar7;
     TextView avgRatings, txtRatPastertia, txtRatNdricimi, txtRatMadhesia, txtRatVentilimi, txtRatKomoditeti,
@@ -55,7 +54,7 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
         mapFragment.getMapAsync(this);
 
         txtName1 = findViewById(R.id.name1);
-        txtType1 = findViewById(R.id.type1);
+        txtDescribtion = findViewById(R.id.describtion);
 
         ratingBar1 = findViewById(R.id.ratingBar1);
         ratingBar2 = findViewById(R.id.ratingBar2);
@@ -196,17 +195,20 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
         String name;
         double lat;
         double lng;
-        String type;
+        String describtion;
 
         if (extras != null) {
             name = extras.getString("name");
             lat = extras.getDouble("latitude");
             lng = extras.getDouble("longitude");
-            type = extras.getString("type");
+            describtion = extras.getString("describtion");
+
+            //type = extras.getString("type");
 
             //Toast.makeText(getApplicationContext(), lat + " ," + lng, Toast.LENGTH_LONG).show();
             txtName1.setText(name);
-            txtType1.setText(type);
+            txtDescribtion.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s");
+            //txtDescribtion.setText(describtion);
 
             goToMapPoint(lat, lng, name);
         }
