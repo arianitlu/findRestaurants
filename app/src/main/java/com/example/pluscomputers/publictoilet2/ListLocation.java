@@ -2,7 +2,7 @@ package com.example.pluscomputers.publictoilet2;
 
 public class ListLocation {
 
-    private int img;
+    private String img;
     private String name;
     private String type;
     private String describtion;
@@ -10,7 +10,7 @@ public class ListLocation {
     private double mLatitude;
     private double mLongitude;
 
-    public ListLocation(int img, String name, String tipi, String describtion, String distanca, double latitude, double longitude) {
+    public ListLocation(String img, String name, String tipi, String describtion, String distanca, double latitude, double longitude) {
         this.img = img;
         this.name = name;
         this.type = tipi;
@@ -29,11 +29,11 @@ public class ListLocation {
         return describtion;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

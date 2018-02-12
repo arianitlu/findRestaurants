@@ -102,31 +102,31 @@ public class FullScreenMapActivity extends FragmentActivity implements OnMapRead
     }
 
     private void listData() {
-        ListLocation lista = new ListLocation(R.drawable.universitet, "Fakulteti Teknik", "Kafe", "",
-                distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
+        ListLocation lista = new ListLocation("https://bitcoin.org/img/icons/opengraph.png", "Fakulteti Teknik", "Kafe",
+                "", distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ferizaj, "Ferizaj", "Kafe", "",
+        lista = new ListLocation("https://cointelegraph.com/storage/uploads/view/f88e17e41f607dc0aef238230dd40cc6.png", "Ferizaj", "Kafe", "",
                 distanceBetweenPoints(42.3703312, 21.1485373), 42.3703312, 21.1485373);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.sunnyhill, "SunnyHill", "Restaurant", "",
+        lista = new ListLocation("https://pbs.twimg.com/profile_images/941460531239677953/UEKsyX4m_400x400.jpg", "SunnyHill", "Restaurant", "",
                 distanceBetweenPoints(42.652385, 21.170248), 42.652385, 21.170248);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.bibloteka, "Libraria Universitare", "Librari", "",
+        lista = new ListLocation("https://pbs.twimg.com/profile_images/879392946730094592/IwNebNtK_400x400.jpg", "Libraria Universitare", "Librari", "",
                 distanceBetweenPoints(42.6557309, 21.1598383), 42.6557309, 21.1598383);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ubt, "Universiteti per biznes dhe teknologji", "Universitet", "",
+        lista = new ListLocation("http://files.coinmarketcap.com.s3-website-us-east-1.amazonaws.com/static/img/coins/200x200/cardano.png", "Universiteti per Biznes dhe Teknologji", "Universitet", "",
                 distanceBetweenPoints(42.558550, 21.134597), 42.558550, 21.134597);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.inovacion, "Qendra inovacionit te Kosoves", "Shkolle", "",
+        lista = new ListLocation("https://www.cryptocompare.com/media/15887408/qsp.png?width=200", "Qendra Inovacionit te Kosoves", "Shkolle", "",
                 distanceBetweenPoints(42.6557098, 21.1597379), 42.6557098, 21.1597379);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.katedralja, "Katedralja", "Katedrale", "",
+        lista = new ListLocation("http://files.coinmarketcap.com.s3-website-us-east-1.amazonaws.com/static/img/coins/200x200/bitdegree.png", "Katedralja", "Katedrale", "",
                 distanceBetweenPoints(42.656550, 21.159302), 42.656550, 21.159302);
         listLocations.add(lista);
     }

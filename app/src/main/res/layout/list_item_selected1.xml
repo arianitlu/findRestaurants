@@ -8,10 +8,10 @@
     android:id="@+id/activity_main"
     tools:context=".MapsActivity">
 
-    <include
-        layout="@layout/toolbar"
-        android:id="@+id/mCustomToolbar"
-        app:layout_constraintTop_toTopOf="@id/frameLayout" />
+    <!--<include-->
+    <!--layout="@layout/toolbar"-->
+    <!--android:id="@+id/mCustomToolbar"-->
+    <!--app:layout_constraintTop_toTopOf="@id/frameLayout" />-->
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

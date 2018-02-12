@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapter.MyViewHolder> {
@@ -81,6 +83,9 @@ public class ListLocationAdapter extends RecyclerView.Adapter<ListLocationAdapte
         holder.type.setText(list.getType());
         holder.distance.setText(distanceBetweenPoints(list.getmLatitude(), list.getmLongitude()) + " km");
         //holder.imageView.setImageResource(list.getImg());
+        Picasso.with(ctx)
+                .load(list.getImg())
+                .into(holder.imageView);
 
     }
 

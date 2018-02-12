@@ -6,9 +6,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.DecimalFormat;
 
-public class ListLocationsDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class ListLocationsDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap mMap;
 
@@ -212,6 +217,30 @@ public class ListLocationsDetailsActivity extends FragmentActivity implements On
 
             goToMapPoint(lat, lng, name);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int resId = item.getItemId();
+
+        if (resId == R.id.action_language) {
+            Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
+        }
+
+        return super.onOptionsItemSelected(item);
+
+
     }
 
     public void callGPS() {

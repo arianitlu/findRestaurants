@@ -12,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,7 +53,7 @@ import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private List<ListLocation> listLocations = new ArrayList<>();
@@ -59,11 +61,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private RecyclerView recyclerView;
     private ListLocationAdapter listAdapter;
     private Snackbar snackbar;
-    //private ImageView gpsLocation;
     private boolean gpsCalled = false;
     private boolean fullScreen = false;
-    //private Button myLocation;
-    private Toolbar toolbar;
+
+    private ImageView gpsFixed;
 
     private String distancaPikave;
 
@@ -74,6 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double lonGPS;
 
     private FrameLayout frameMap;
+    ViewGroup.LayoutParams paramsNormal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +96,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //myLocation = findViewById(R.id.myLocation);
 
-        //toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
-        //setActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar)findViewById(R.id.custom_toolbar);
+//        setSupportActionBar(toolbar);
+
+        //ActionBar actionBar =getSupportActionBar();
+        //actionBar.setDefaultDisplayHomeAsUpEnabled(true);
+
+        gpsFixed = findViewById(R.id.locationTouch);
 
         frameMap = findViewById(R.id.frameMap);
 
+        //paramsNormal = frameMap.getLayoutParams();
+        //paramsNormal.height = frameMap.getHeight();
 
         callGPS();
         listData();
@@ -137,7 +146,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int i = 0; i < listLocations.size(); i++) {
 
-            createPointMap(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(), listLocations.get(i).getName(), colorMarkerNormal);
+            createPointMap(listLocations.get(i).getmLatitude(), listLocations.get(i).getmLongitude(),
+                    listLocations.get(i).getName(), colorMarkerNormal);
 
         }
 
@@ -187,12 +197,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-//        myLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                callGpsOnTouch();
-//            }
-//        });
+        gpsFixed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callGpsOnTouch();
+            }
+        });
 
         createPointMap(listLocations.get(0).getmLatitude(), listLocations.get(0).getmLongitude(),
                 listLocations.get(0).getName(), colorMarkerNormal);
@@ -202,12 +212,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_main, menu);
 
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
@@ -217,11 +225,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (resId == R.id.action_language) {
             Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "You selected about settings", Toast.LENGTH_LONG).show();
         }
-
         return super.onOptionsItemSelected(item);
-
-
     }
 
     public String distanceBetweenPoints(double lat, double lng) {
@@ -236,38 +243,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void listData() {
-        ListLocation lista = new ListLocation(R.drawable.universitet, "Fakulteti Teknik", "Kafe",
+        ListLocation lista = new ListLocation("https://bitcoin.org/img/icons/opengraph.png", "Fakulteti Teknik", "Kafe",
                 "", distanceBetweenPoints(42.648533, 21.167011), 42.648533, 21.167011);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ferizaj, "Ferizaj", "Kafe", "",
+        lista = new ListLocation("https://cointelegraph.com/storage/uploads/view/f88e17e41f607dc0aef238230dd40cc6.png", "Ferizaj", "Kafe", "",
                 distanceBetweenPoints(42.3703312, 21.1485373), 42.3703312, 21.1485373);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.sunnyhill, "SunnyHill", "Restaurant", "",
+        lista = new ListLocation("https://pbs.twimg.com/profile_images/941460531239677953/UEKsyX4m_400x400.jpg", "SunnyHill", "Restaurant", "",
                 distanceBetweenPoints(42.652385, 21.170248), 42.652385, 21.170248);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.bibloteka, "Libraria Universitare", "Librari", "",
+        lista = new ListLocation("https://pbs.twimg.com/profile_images/879392946730094592/IwNebNtK_400x400.jpg", "Libraria Universitare", "Librari", "",
                 distanceBetweenPoints(42.6557309, 21.1598383), 42.6557309, 21.1598383);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.ubt, "Universiteti per Biznes dhe Teknologji", "Universitet", "",
+        lista = new ListLocation("http://files.coinmarketcap.com.s3-website-us-east-1.amazonaws.com/static/img/coins/200x200/cardano.png", "Universiteti per Biznes dhe Teknologji", "Universitet", "",
                 distanceBetweenPoints(42.558550, 21.134597), 42.558550, 21.134597);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.inovacion, "Qendra Inovacionit te Kosoves", "Shkolle", "",
+        lista = new ListLocation("https://www.cryptocompare.com/media/15887408/qsp.png?width=200", "Qendra Inovacionit te Kosoves", "Shkolle", "",
                 distanceBetweenPoints(42.6557098, 21.1597379), 42.6557098, 21.1597379);
         listLocations.add(lista);
 
-        lista = new ListLocation(R.drawable.katedralja, "Katedralja", "Katedrale", "",
+        lista = new ListLocation("http://files.coinmarketcap.com.s3-website-us-east-1.amazonaws.com/static/img/coins/200x200/bitdegree.png", "Katedralja", "Katedrale", "",
                 distanceBetweenPoints(42.656550, 21.159302), 42.656550, 21.159302);
         listLocations.add(lista);
     }
 
     public void callGPS() {
-        ActivityCompat.requestPermissions(MapsActivity.this,new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION},123);
+        ActivityCompat.requestPermissions(MapsActivity.this, new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION}, 123);
 
         GPStracker g = new GPStracker(getApplication());
         Location l = g.getLocation();
@@ -304,10 +311,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void createPointMap(double latitude, double longitude, String title, float color) {
 
-        LatLng location = new LatLng(latitude,longitude);
+        LatLng location = new LatLng(latitude, longitude);
 
         CameraPosition position = new CameraPosition.Builder()
-                .target(new LatLng(latitude,longitude))
+                .target(new LatLng(latitude, longitude))
                 .zoom(14)
                 .build();
         mMap.animateCamera(CameraUpdateFactory
@@ -320,7 +327,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .center(location)
                 .radius(100)
                 .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(64,0,255,0)));
+                .fillColor(Color.argb(64, 0, 255, 0)));
     }
 
     public void goToPointMap(double latitude, double longitude) {
@@ -389,7 +396,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void changeHeightNormal(View... views) {
         for (View current : views) {
             ViewGroup.LayoutParams params = current.getLayoutParams();
-            params.height = 1000;
+            params.height = 800;
             params.width = MATCH_PARENT;
             current.setLayoutParams(params);
         }

@@ -6,9 +6,21 @@
     android:orientation="vertical"
     android:id="@+id/activity_main">
 
-    <!--<include-->
-    <!--layout="@layout/toolbar"-->
-    <!--android:id="@+id/mCustomToolbar" />-->
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/custom_toolbar"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#263238">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Public Toilet"-->
+    <!--android:textSize="16sp"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:layout_marginStart="18dp" />-->
+    <!--</android.support.v7.widget.Toolbar>-->
 
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,18 +38,20 @@
             android:layout_height="match_parent"
             tools:context="com.example.pluscomputers.publictoilet2.MapsActivity" />
 
-        <!--<ImageView-->
-        <!--android:id="@+id/gpsLocation"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:layout_marginBottom="10dp"-->
-        <!--android:cropToPadding="false"-->
-        <!--android:layout_margin="10dp"-->
-        <!--android:src="@drawable/gpsfixedindicator"-->
-        <!--android:layout_gravity="right|bottom"-->
-        <!--android:background="@android:color/transparent">-->
-        <!--</ImageView>-->
+        <ImageView
+            android:id="@+id/locationTouch"
+            android:scaleType="fitXY"
+            android:padding="3dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="10dp"
+            android:cropToPadding="false"
+            android:layout_margin="10dp"
+            android:src="@drawable/gpxfixedindicator2"
+            android:layout_gravity="right|top"
+            android:background="#CCffffff">
+            <!--android:background="@android:color/transparent>-->
+        </ImageView>
 
 
     </FrameLayout>
