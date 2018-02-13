@@ -4,13 +4,22 @@ import android.Manifest;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.ChangeBounds;
+import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,11 +36,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.DecimalFormat;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 public class ListLocationsDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap mMap;
 
     TextView txtName1, txtDescribtion;
+    ImageView gpsFixed2;
+    Double latGPS, lonGPS;
+    Boolean gpsCalled = false;
+    private boolean fullScreen = false;
+    float colorMarkerGPS = BitmapDescriptorFactory.HUE_BLUE;
+    private LinearLayout linearLayoutRoot;
+    private FrameLayout frameMap1;
+
 
     RatingBar ratingBar1, ratingBar2, ratingBar3, ratingBar4, ratingBar5, ratingBar6, ratingBar7;
     TextView avgRatings, txtRatPastertia, txtRatNdricimi, txtRatMadhesia, txtRatVentilimi, txtRatKomoditeti,
@@ -58,6 +79,9 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
+        linearLayoutRoot = findViewById(R.id.linearLayoutRoot);
+        frameMap1 = findViewById(R.id.frameLayout);
+
         txtName1 = findViewById(R.id.name1);
         txtDescribtion = findViewById(R.id.describtion);
 
@@ -68,6 +92,8 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
         ratingBar5 = findViewById(R.id.ratingBar5);
         ratingBar6 = findViewById(R.id.ratingBar6);
         ratingBar7 = findViewById(R.id.ratingBar7);
+
+        gpsFixed2 = findViewById(R.id.gpsFixed2);
 
         avgRatings = findViewById(R.id.avgRatings);
 
@@ -90,6 +116,113 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
         addListenerOnRatingBar();
 
         avgRatings.setText(String.valueOf(mesatarjaRatings(1)));
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mMap = googleMap;
+
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+        String name;
+        double lat;
+        double lng;
+        String describtion;
+
+        gpsFixed2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callGpsOnTouch();
+            }
+        });
+
+        if (extras != null) {
+            name = extras.getString("name");
+            lat = extras.getDouble("latitude");
+            lng = extras.getDouble("longitude");
+            describtion = extras.getString("describtion");
+
+            //type = extras.getString("type");
+
+            //Toast.makeText(getApplicationContext(), lat + " ," + lng, Toast.LENGTH_LONG).show();
+            txtName1.setText(name);
+            txtDescribtion.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s");
+            //txtDescribtion.setText(describtion);
+
+            goToMapPoint(lat, lng, name);
+        }
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng clickCoords) {
+
+                boolean isFullScreen = false;
+
+                ChangeBounds changeBounds = new ChangeBounds();
+                changeBounds.setDuration(2000);
+
+                if (fullScreen == false) {
+
+                    isFullScreen = true;
+
+                    Animation bottomDown = AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.bottom_down);
+
+                    linearLayoutRoot.startAnimation(bottomDown);
+                    linearLayoutRoot.setVisibility(View.INVISIBLE);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChangeBounds changeBounds = new ChangeBounds();
+                            changeBounds.setDuration(2500);
+                            TransitionManager.beginDelayedTransition(frameMap1, changeBounds);
+                            changeHeightFull(frameMap1);
+                        }
+                    }, 2000);
+                } else {
+                    changeHeightNormal(frameMap1);
+
+                    isFullScreen = false;
+
+                    TransitionManager.beginDelayedTransition(frameMap1, changeBounds);
+
+                    Animation bottomUp = AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.bottom_up);
+
+                    linearLayoutRoot.startAnimation(bottomUp);
+                    linearLayoutRoot.setVisibility(View.VISIBLE);
+                }
+                fullScreen = isFullScreen;
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int resId = item.getItemId();
+
+        if (resId == R.id.action_language) {
+            Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
+        }
+
+        return super.onOptionsItemSelected(item);
+
 
     }
 
@@ -189,58 +322,27 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
         return shumaShkurtuar;
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void callGpsOnTouch() {
 
-        mMap = googleMap;
+        ActivityCompat.requestPermissions(ListLocationsDetailsActivity.this, new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION}, 123);
 
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        if (gpsCalled == false) {
 
-        Bundle extras = getIntent().getExtras();
-        String name;
-        double lat;
-        double lng;
-        String describtion;
+            GPStracker g = new GPStracker(getApplication());
+            Location l = g.getLocation();
 
-        if (extras != null) {
-            name = extras.getString("name");
-            lat = extras.getDouble("latitude");
-            lng = extras.getDouble("longitude");
-            describtion = extras.getString("describtion");
+            if (l != null) {
+                latGPS = l.getLatitude();
+                lonGPS = l.getLongitude();
 
-            //type = extras.getString("type");
-
-            //Toast.makeText(getApplicationContext(), lat + " ," + lng, Toast.LENGTH_LONG).show();
-            txtName1.setText(name);
-            txtDescribtion.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s");
-            //txtDescribtion.setText(describtion);
-
-            goToMapPoint(lat, lng, name);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_main, menu);
-
-        return super.onCreateOptionsMenu(menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int resId = item.getItemId();
-
-        if (resId == R.id.action_language) {
-            Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
+                createPointMap(latGPS, lonGPS, "Your location", colorMarkerGPS);
+            }
         }
 
-        return super.onOptionsItemSelected(item);
+        goToMapPoint(latGPS, lonGPS, "Your Location");
 
-
+        gpsCalled = true;
     }
 
     public void callGPS() {
@@ -251,12 +353,33 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
         Location l = g.getLocation();
 
         if (l != null) {
-            double latGPS = l.getLatitude();
-            double lonGPS = l.getLongitude();
+            latGPS = l.getLatitude();
+            lonGPS = l.getLongitude();
 
             goToMapPoint(latGPS, lonGPS, "Your location");
         }
 
+    }
+
+    public void createPointMap(double latitude, double longitude, String title, float color) {
+
+        LatLng location = new LatLng(latitude, longitude);
+
+        CameraPosition position = new CameraPosition.Builder()
+                .target(new LatLng(latitude, longitude))
+                .zoom(14)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(position), 4000, null);
+        mMap.addMarker(new MarkerOptions()
+                .position(location)
+                .title(title)
+                .icon(BitmapDescriptorFactory.defaultMarker(color)));
+        mMap.addCircle(new CircleOptions()
+                .center(location)
+                .radius(100)
+                .strokeColor(Color.GREEN)
+                .fillColor(Color.argb(64, 0, 255, 0)));
     }
 
     public void goToMapPoint(double latitude, double longitude, String title) {
@@ -282,5 +405,23 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
     public void noStatusBar() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public void changeHeightFull(View... views) {
+        for (View current : views) {
+            ViewGroup.LayoutParams params = current.getLayoutParams();
+            params.height = MATCH_PARENT;
+            params.width = MATCH_PARENT;
+            current.setLayoutParams(params);
+        }
+    }
+
+    public void changeHeightNormal(View... views) {
+        for (View current : views) {
+            ViewGroup.LayoutParams params = current.getLayoutParams();
+            params.height = 800;
+            params.width = MATCH_PARENT;
+            current.setLayoutParams(params);
+        }
     }
 }
