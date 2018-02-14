@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,6 +75,8 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
         setContentView(R.layout.list_item_selected1);
 
         noStatusBar();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);
@@ -168,22 +171,25 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
 
                     isFullScreen = true;
 
-                    Animation bottomDown = AnimationUtils.loadAnimation(getApplicationContext(),
-                            R.anim.bottom_down);
+                    TranslateAnimation animate = new TranslateAnimation(0, 0, 0, 930);
+                    animate.setDuration(2000);
+                    animate.setFillAfter(true);
+                    linearLayoutRoot.startAnimation(animate);
+                    linearLayoutRoot.setVisibility(View.GONE);
 
-                    linearLayoutRoot.startAnimation(bottomDown);
-                    linearLayoutRoot.setVisibility(View.INVISIBLE);
+                    TransitionManager.beginDelayedTransition(frameMap1, changeBounds);
+                    changeHeightFull(frameMap1);
 
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            ChangeBounds changeBounds = new ChangeBounds();
-                            changeBounds.setDuration(2500);
-                            TransitionManager.beginDelayedTransition(frameMap1, changeBounds);
-                            changeHeightFull(frameMap1);
-                        }
-                    }, 2000);
+//                    final Handler handler = new Handler();
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            ChangeBounds changeBounds = new ChangeBounds();
+//                            changeBounds.setDuration(2500);
+//                            TransitionManager.beginDelayedTransition(frameMap1, changeBounds);
+//                            changeHeightFull(frameMap1);
+//                        }
+//                    }, 2000);
                 } else {
                     changeHeightNormal(frameMap1);
 
@@ -191,11 +197,15 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
 
                     TransitionManager.beginDelayedTransition(frameMap1, changeBounds);
 
-                    Animation bottomUp = AnimationUtils.loadAnimation(getApplicationContext(),
-                            R.anim.bottom_up);
+//                    Animation bottomUp = AnimationUtils.loadAnimation(getApplicationContext(),
+//                            R.anim.bottom_up);
+                    TranslateAnimation animate = new TranslateAnimation(0, 0, 930, 0);
+                    animate.setDuration(2000);
+                    animate.setFillAfter(true);
+                    linearLayoutRoot.startAnimation(animate);
 
-                    linearLayoutRoot.startAnimation(bottomUp);
-                    linearLayoutRoot.setVisibility(View.VISIBLE);
+                    //linearLayoutRoot.startAnimation(bottomUp);
+                    //linearLayoutRoot.setVisibility(View.VISIBLE);
                 }
                 fullScreen = isFullScreen;
             }
@@ -219,6 +229,11 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
 
         if (resId == R.id.action_language) {
             Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
+        } else if (resId == android.R.id.home) {
+            onBackPressed();
+        }
+        if (resId == R.id.action_about) {
+            Toast.makeText(getApplicationContext(), "You selected about settings", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -410,7 +425,7 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
     public void changeHeightFull(View... views) {
         for (View current : views) {
             ViewGroup.LayoutParams params = current.getLayoutParams();
-            params.height = MATCH_PARENT;
+            params.height = 1700;
             params.width = MATCH_PARENT;
             current.setLayoutParams(params);
         }

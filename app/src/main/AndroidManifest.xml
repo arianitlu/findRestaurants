@@ -41,11 +41,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListLocationsDetailsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.pluscomputers.publictoilet2.MapsActivity" />
+            <!--<meta-data-->
+            <!--android:name="android.support.PARENT_ACTIVITY"-->
+            <!--android:value="com.example.pluscomputers.publictoilet2.MapsActivity" />-->
         </activity>
-        <activity android:name=".FullScreenMapActivity"></activity>
     </application>
 
 </manifest>

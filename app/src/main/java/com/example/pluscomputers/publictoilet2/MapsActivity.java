@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -115,11 +116,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setItemViewCacheSize(20);
+//        recyclerView.setDrawingCacheEnabled(true);
+//        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setAdapter(listAdapter);
 
         callSnackBar();
@@ -167,19 +168,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Animation bottomDown = AnimationUtils.loadAnimation(getApplicationContext(),
                             R.anim.bottom_down);
 
-                    recyclerView.startAnimation(bottomDown);
-                    recyclerView.setVisibility(View.INVISIBLE);
+                    TranslateAnimation animate = new TranslateAnimation(0, 0, 0, recyclerView.getHeight());
+                    animate.setDuration(2000);
+                    animate.setFillAfter(true);
+                    recyclerView.startAnimation(animate);
+                    recyclerView.setVisibility(View.GONE);
+
+//                    recyclerView.startAnimation(bottomDown);
+//                    recyclerView.setVisibility(View.INVISIBLE);
+                    TransitionManager.beginDelayedTransition(frameMap, changeBounds);
+                    changeHeightFull(frameMap);
 
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            ChangeBounds changeBounds = new ChangeBounds();
-                            changeBounds.setDuration(2500);
-                            TransitionManager.beginDelayedTransition(frameMap, changeBounds);
-                            changeHeightFull(frameMap);
+                            recyclerView.setVisibility(View.INVISIBLE);
                         }
-                    }, 2000);
+                    }, 700);
+
+//                    final Handler handler = new Handler();
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            ChangeBounds changeBounds = new ChangeBounds();
+//                            changeBounds.setDuration(2000);
+//                            TransitionManager.beginDelayedTransition(frameMap, changeBounds);
+//                            changeHeightFull(frameMap);
+//                        }
+//                    }, 700);
                 } else {
                     changeHeightNormal(frameMap);
 
@@ -187,11 +204,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     TransitionManager.beginDelayedTransition(frameMap, changeBounds);
 
-                    Animation bottomUp = AnimationUtils.loadAnimation(getApplicationContext(),
-                            R.anim.bottom_up);
+//                    Animation bottomUp = AnimationUtils.loadAnimation(getApplicationContext(),
+//                            R.anim.bottom_up);
 
-                    recyclerView.startAnimation(bottomUp);
-                    recyclerView.setVisibility(View.VISIBLE);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            TranslateAnimation animate = new TranslateAnimation(0, 0, recyclerView.getHeight(), 0);
+                            animate.setDuration(2000);
+                            animate.setFillAfter(true);
+                            recyclerView.startAnimation(animate);
+                        }
+                    }, 100);
+//
+//                    recyclerView.startAnimation(bottomUp);
+//                    recyclerView.setVisibility(View.VISIBLE);
                 }
                 fullScreen = isFullScreen;
             }
