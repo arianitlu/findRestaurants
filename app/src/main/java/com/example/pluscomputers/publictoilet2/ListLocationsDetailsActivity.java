@@ -1,11 +1,17 @@
 package com.example.pluscomputers.publictoilet2;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeBounds;
 import android.transition.TransitionManager;
@@ -36,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -53,6 +60,7 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
     private LinearLayout linearLayoutRoot;
     private FrameLayout frameMap1;
 
+    AlertDialog levelDialog;
 
     RatingBar ratingBar1, ratingBar2, ratingBar3, ratingBar4, ratingBar5, ratingBar6, ratingBar7;
     TextView avgRatings, txtRatPastertia, txtRatNdricimi, txtRatMadhesia, txtRatVentilimi, txtRatKomoditeti,
@@ -73,6 +81,12 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_item_selected1);
+
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonLanguage",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        languageToLoad(language);
 
         noStatusBar();
 
@@ -214,31 +228,46 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_main, menu);
 
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int resId = item.getItemId();
+        final int resId = item.getItemId();
 
         if (resId == R.id.action_language) {
-            Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
-        } else if (resId == android.R.id.home) {
-            onBackPressed();
-        }
-        if (resId == R.id.action_about) {
+
+// Strings to Show In Dialog with Radio Buttons
+            final CharSequence[] items = {getResources().getString(R.string.gjuhaAngleze)
+                    , getResources().getString(R.string.gjuhaShqipe)};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.zgjedhGjuhen));
+            builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    switch (item) {
+                        case 0:
+                            saveLocale("en");
+                            restartApp();
+                            break;
+                        case 1:
+                            saveLocale("sq");
+                            restartApp();
+                            break;
+                    }
+                    levelDialog.dismiss();
+                }
+            });
+            levelDialog = builder.create();
+            levelDialog.show();
+        } else {
             Toast.makeText(getApplicationContext(), "You selected about settings", Toast.LENGTH_LONG).show();
         }
-
         return super.onOptionsItemSelected(item);
-
-
     }
 
     public void addListenerOnRatingBar() {
@@ -438,5 +467,31 @@ public class ListLocationsDetailsActivity extends AppCompatActivity implements O
             params.width = MATCH_PARENT;
             current.setLayoutParams(params);
         }
+    }
+
+    public void languageToLoad(String languageToLoad) {
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        saveLocale(languageToLoad);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void saveLocale(String lang) {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonLanguage",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
+    public void restartApp() {
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 }

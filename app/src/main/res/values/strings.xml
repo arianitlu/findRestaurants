@@ -1,13 +1,31 @@
 <resources>
     <string name="app_name">Public Toilet 2</string>
     <string name="title_activity_maps">Public Toilet 2</string>
-    <string name="name">Emri i biznesit</string>
-    <string name="type">Tipi i biznesit</string>
+    <string name="name">Name of business</string>
+    <string name="type">Type of business</string>
     <string name="pershkrimi">Restaurant with Mediterranean, Italian, Asiatic and Traditional Healthy food. Nice Garden, Good Atmosphere and Perfect Service.</string>
     <string name="distance">2000 km</string>
-
     <string name="title_activity_fullscreen_maps">FullscreenMapsActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="pastertia">Clean</string>
+    <string name="ndricimi">Light</string>
+    <string name="madhesia">Size</string>
+    <string name="ventilimi">Ventilation</string>
+    <string name="komoditeti">Commodity</string>
+    <string name="pajisje">Tools</string>
+    <string name="uje">Hot Water</string>
+
+    <string name="snackbar1">Your closest point is: </string>
+
+    <string name="zgjedhGjuhen">Choose language </string>
+
+    <string name="language">Language</string>
+    <string name="about">About</string>
+
+    <string name="gjuhaAngleze">English</string>
+    <string name="gjuhaShqipe">Albanian</string>
+
 
 </resources>

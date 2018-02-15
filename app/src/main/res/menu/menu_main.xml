@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/action_language"
-        android:title="Language"
+        android:title="@string/language"
         android:icon="@drawable/sunnyhill"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_about"
-        android:title="About"
+        android:title="@string/about"
         android:icon="@drawable/bibloteka"
         app:showAsAction="never" />
 

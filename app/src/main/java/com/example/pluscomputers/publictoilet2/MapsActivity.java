@@ -1,8 +1,12 @@
 package com.example.pluscomputers.publictoilet2;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
@@ -13,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -67,6 +73,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private ImageView gpsFixed;
 
+    AlertDialog levelDialog;
+
     private String distancaPikave;
 
     float colorMarkerGPS = BitmapDescriptorFactory.HUE_AZURE;
@@ -76,11 +84,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     double lonGPS;
 
     private FrameLayout frameMap;
-    ViewGroup.LayoutParams paramsNormal;
+
+    boolean isLanguageSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonLanguage",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        languageToLoad(language);
 
         noStatusBar();
 
@@ -253,7 +268,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         int resId = item.getItemId();
 
         if (resId == R.id.action_language) {
-            Toast.makeText(getApplicationContext(), "You selected language settings", Toast.LENGTH_LONG).show();
+
+// Strings to Show In Dialog with Radio Buttons
+            final CharSequence[] items = {getResources().getString(R.string.gjuhaAngleze)
+                    , getResources().getString(R.string.gjuhaShqipe)};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.zgjedhGjuhen));
+            builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    switch (item) {
+                        case 0:
+                            saveLocale("en");
+                            restartApp();
+                            break;
+                        case 1:
+                            saveLocale("sq");
+                            restartApp();
+                            break;
+                    }
+                    levelDialog.dismiss();
+                }
+            });
+            levelDialog = builder.create();
+            levelDialog.show();
         } else {
             Toast.makeText(getApplicationContext(), "You selected about settings", Toast.LENGTH_LONG).show();
         }
@@ -386,7 +424,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String snackBarDistanca = distanceBetweenPoints(listLocations.get(0).getmLatitude(),
                 listLocations.get(0).getmLongitude());
         String snackBarDistancaShkurtuar = snackBarDistanca.substring(0, 4);
-        snackbar = Snackbar.make(view, "Pika juaj më e afërt është: " + snackBarDistancaShkurtuar + " km",
+        snackbar = Snackbar.make(view, getResources().getString(R.string.snackbar1) + " " + snackBarDistancaShkurtuar + " km",
                 Snackbar.LENGTH_INDEFINITE)
                 .setAction("Hide", new View.OnClickListener() {
                     @Override
@@ -429,6 +467,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             params.width = MATCH_PARENT;
             current.setLayoutParams(params);
         }
+    }
+
+    public void languageToLoad(String languageToLoad) {
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        saveLocale(languageToLoad);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void saveLocale(String lang) {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonLanguage",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
+    public void restartApp() {
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 
 }
