@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tualeti Publik 2</string>
+    <string name="title_activity_maps">Tualeti Publik 2</string>
+    <string name="name">Emri i biznesit</string>
+    <string name="type">Tipi i biznesit</string>
+    <string name="pershkrimi">Restaurant me ushqim të shëndetshem Mediterranean, Italian, Asiatic and Traditional. Kopsht të mirë, atmosferë të mirë dhe shërbim perfekt !</string>
+    <string name="distance">2000 km</string>
+    <string name="title_activity_fullscreen_maps">FullscreenMapsActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="pastertia">Pastërtia</string>
+    <string name="ndricimi">Ndricimi</string>
+    <string name="madhesia">Madhësia</string>
+    <string name="ventilimi">Ventilimi</string>
+    <string name="komoditeti">Komoditeti</string>
+    <string name="pajisje">Pajisje</string>
+    <string name="uje">Ujë nxehtë</string>
+
+    <string name="snackbar1">Pika juaj më e afërt është: </string>
+
+    <string name="zgjedhGjuhen">Zgjedh gjuhën ! </string>
+
+    <string name="language">Gjuha</string>
+    <string name="about">Rreth nesh</string>
+
+    <string name="gjuhaAngleze">Anglisht</string>
+    <string name="gjuhaShqipe">Shqip</string>
+
+
+</resources>
